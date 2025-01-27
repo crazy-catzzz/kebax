@@ -23,19 +23,27 @@ LINKFILE := link.ld
 default: init_all make_all link clean_objects
 
 # Make parts
-make_all: make_drivers make_boot make_core
+make_all: make_drivers make_boot make_idt make_core
 
 make_drivers:
 	$(CC) $(CC_FLAGS) -c $(SOURCE)/drv/*.c -I$(INCLUDE)
-	mv *.o $(OUT)
+	# $(NASM) -f elf32 $(SOURCE)/drv/*.asm
+	mv -f *.o $(OUT)
 
 make_core:
 	$(CC) $(CC_FLAGS) -c $(SOURCE)/core/*.c -I$(INCLUDE)
-	mv *.o $(OUT)
+	$(NASM) -f elf32 $(SOURCE)/core/*.asm
+	mv -f $(SOURCE)/core/*.o $(OUT)
+	mv -f *.o $(OUT)
 
 make_boot:
 	$(NASM) -f elf32 $(SOURCE)/boot/*.asm
-	mv $(SOURCE)/boot/*.o $(OUT)
+	mv -f $(SOURCE)/boot/*.o $(OUT)
+
+make_idt:
+	$(CC) $(CC_FLAGS) -c $(SOURCE)/boot/idt/*.c -I$(INCLUDE)
+	$(NASM) -f elf32 $(SOURCE)/boot/idt/*.asm
+	mv -f $(SOURCE)/boot/idt/*.o $(OUT)
 
 # Linking
 link:
@@ -45,10 +53,10 @@ link:
 clean_all: clean_objects clean_exec
 
 clean_objects:
-	rm -r $(OUT)
+	rm -rf $(OUT)
 
 clean_exec:
-	rm -r $(BUILD)
+	rm -rf $(BUILD)
 
 # Directory initialization
 init_all: init_objects init_exec

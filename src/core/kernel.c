@@ -1,4 +1,5 @@
 #include "../include/basic_vga.h"
+#include "../include/idt.h"
 #include <stdbool.h>
 
 int kern_main() {
@@ -7,6 +8,10 @@ int kern_main() {
   puts("Kebax v0.0.1-alpha-scarraFOSS\n");
 
   puts("Control successfully handed over to C kernel!\n");
+
+  puts("Initializing Interrupt Descriptor Table...\n");
+  idt_init();
+  puts("Done!\n");
 
   while(true);
 }

@@ -8,6 +8,7 @@
 
 #define BUF_SIZE 128
 
+// Circular keyboard buffer
 char kb_buffer[BUF_SIZE];
 int buf_head = 0;
 int buf_tail = 0;
@@ -63,7 +64,8 @@ void kb_irq_callback() {
     scancode = read_port(KB_DATA);
     
     char ch = kb_scan_to_char(scancode);
-    
+    if (ch == 0) return;  // Ignore special keys
+
     // Put character into buffer
     kb_buffer[buf_head] = ch;
     buf_head = (buf_head + 1) % BUF_SIZE;

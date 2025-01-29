@@ -20,3 +20,4 @@ struct IDT_Entry {
 
 void load_idt(unsigned long* idt_ptr);
 void idt_init(void);
+void idt_enable_interrupt(char interrupt_code);

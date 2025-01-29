@@ -18,7 +18,5 @@ int kern_main() {
   idt_enable_interrupt(1);
   puts("Done!\n");
 
-  putc(kb_get_next_char());
-
   while(true);
 }

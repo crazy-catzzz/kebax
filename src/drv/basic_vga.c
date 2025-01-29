@@ -1,3 +1,5 @@
+// Basic VGA text mode driver
+
 #include "../include/basic_vga.h"
 
 #define SCR_COLS 80

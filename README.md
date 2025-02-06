@@ -9,12 +9,13 @@ Currently, Kebax supports these features:
 - Interrupt handling
     - IRQ1 (Keyboard)
 - VGA text mode video output
+- Memory management
+    - Physical allocator
 
 ## TODO
 
 I plan to add these features in the (somewhat) near future:
 
 - Memory management
-    - Physical allocator
     - Paging and virtual memory manager
 

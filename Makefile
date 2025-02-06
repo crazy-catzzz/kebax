@@ -23,7 +23,7 @@ LINKFILE := link.ld
 default: init_all make_all link clean_objects
 
 # Make parts
-make_all: make_drivers make_boot make_idt make_irq make_core
+make_all: make_drivers make_boot make_idt make_irq make_pmm make_core
 
 make_drivers:
 	$(CC) $(CC_FLAGS) -c $(SOURCE)/drv/*.c -I$(INCLUDE)
@@ -44,10 +44,15 @@ make_idt:
 	$(CC) $(CC_FLAGS) -c $(SOURCE)/boot/idt/*.c -I$(INCLUDE)
 	$(NASM) -f elf32 $(SOURCE)/boot/idt/*.asm
 	mv -f $(SOURCE)/boot/idt/*.o $(OUT)
+	mv -f *.o $(OUT)
 
 make_irq:
 	$(NASM) -f elf32 $(SOURCE)/core/irq/*.asm
 	mv -f $(SOURCE)/core/irq/*.o $(OUT)
+
+make_pmm:
+	$(CC) $(CC_FLAGS) -c $(SOURCE)/core/pmm/*.c -I$(INCLUDE)
+	mv -f *.o $(OUT)
 
 # Linking
 link:

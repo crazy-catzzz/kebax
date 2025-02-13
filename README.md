@@ -18,4 +18,5 @@ I plan to add these features in the (somewhat) near future:
 
 - Memory management
     - Paging and virtual memory manager
+    - Segmentation
 

@@ -1,9 +1,13 @@
 #include "../include/basic_vga.h"
 #include "../include/keyboard.h"
 #include "../include/idt.h"
+#include "../include/vmm.h"
 #include <stdbool.h>
 
 int kern_main() {
+  pmm_align_memory();
+  vmm_init_paging();
+
   vga_init_color(COLORSCHEME_BLACKGREY);
   vga_clear_screen();
   puts("Kebax v0.0.1-alpha-scarraFOSS\n");

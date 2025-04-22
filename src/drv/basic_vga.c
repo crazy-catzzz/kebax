@@ -69,3 +69,39 @@ void puts(char* s) {
     putc(s[i]);
   }
 }
+
+// Send integer to screen
+void puti(int i) {
+  int n = i;
+  int j = 0;
+  char* istr;
+
+  do {
+    char* base_ten_map = "0123456789";
+    int index = i % 10;
+    if (index < 0) index = -index;
+    istr[j] = base_ten_map[index];
+    i /= 10;
+    j++;
+  } while (i);
+
+  int end = j - 1;
+  int start = 0;
+
+  while (start < end) {
+    char temp = istr[start];
+    istr[start] = istr[end];
+    istr[end] = temp;
+    start++;
+    end--;
+  }
+  istr[j] = '\0';
+
+  if (n < 0) {
+    putc('-');
+  }
+  
+  for (int k = 0; istr[k] != 0; k++) {
+    putc(istr[k]);
+  }
+}

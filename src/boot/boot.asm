@@ -10,12 +10,14 @@ section .text
   dd - (0x1BADB002 + 0x00)
 
 global start
-extern kern_main
+extern _main
 
 start:
   cli ; Clear interrupts
   mov esp, stack_space ; Init stack
-  call kern_main ; Hand control over to C kernel entrypoint
+  push eax  ; GRUB memory map (?)
+  push ebx  ; GRUB memory map (?)
+  call _main ; Hand control over to C kernel entrypoint
   hlt
 
 ; Init stack space

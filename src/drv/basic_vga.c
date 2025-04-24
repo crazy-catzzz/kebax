@@ -70,6 +70,18 @@ void puts(char* s) {
   }
 }
 
+// Send hex to screen
+void putx(unsigned long int x) {
+  char* map = "0123456789ABCDEF";
+
+  if (x / 16 != 0) {
+    putx(x / 16);
+  } else {
+    puts("0x");
+  }
+  putc(map[x % 16]);
+}
+
 // Send integer to screen
 void puti(int i) {
   int n = i;

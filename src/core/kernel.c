@@ -63,6 +63,10 @@ int kern_main() {
   puts("Kebax v0.0.1-alpha-scarraFOSS\n");
   puts("Control successfully handed over to C kernel!\n");
   
+  if (vmm_virt_to_phys(0xC0000000) == 0x100000) {
+    puts("Kernel is in higher half!");
+  }
+
   idt_init();
   idt_enable_interrupt(1);
   

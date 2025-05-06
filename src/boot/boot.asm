@@ -10,17 +10,7 @@ section .text
   dd - (0x1BADB002 + 0x00)
 
 global start
-extern _main
+extern stage1
 
 start:
-  cli ; Clear interrupts
-  mov esp, stack_space ; Init stack
-  push eax  ; GRUB memory map (?)
-  push ebx  ; GRUB memory map (?)
-  call _main ; Hand control over to C kernel entrypoint
-  hlt
-
-; Init stack space
-section .bss
-resb 8192 ; 8KB stack space
-stack_space: ; Stack goes from bottom to top
+  jmp stage1

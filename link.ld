@@ -3,10 +3,30 @@ ENTRY(start)
 
 SECTIONS {
   . = 0x00100000;
-  .text : { *(.text) }
-  .data ALIGN (0x1000) : { *(.data) }
-  .bss  : {
-    *(.bss)
-    kern_end = .;
+
+  .multiboot : {
+    out/boot.o(.text)
   }
+
+  .stage1 : {
+    out/stage1.o(*)
+    out/init_paging.o(*)
+  }
+
+  . += 0xC0000000;
+  .text ALIGN (4K) : AT (ADDR (.text) - 0xC0000000) { 
+    *(.text) 
+  }
+  .data ALIGN (4K) : AT (ADDR (.data) - 0xC0000000) { 
+    *(.data)
+  }
+  .rodata ALIGN (4K) : AT (ADDR (.rodata) - 0xC0000000) {
+    *(.rodata)
+  }
+  .bss  ALIGN (4K) : AT (ADDR (.bss) - 0xC0000000) {
+    *(.bss)
+  }
+  kern_end = .;
+
+  /DISCARD/ : {*(*)}
 }

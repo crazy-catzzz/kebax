@@ -11,7 +11,7 @@ extern void vmm_load_page_directory(page_directory_entry_t* page_directory);
 extern void vmm_enable_paging();
 
 // Topmost structure
-page_directory_entry_t* page_directory;
+/*page_directory_entry_t* page_directory;
 
 
 // Flush TLB
@@ -86,4 +86,4 @@ void vmm_init_paging() {
 
   vmm_load_page_directory(page_directory);
   vmm_enable_paging();
-}
+}*/

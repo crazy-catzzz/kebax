@@ -21,6 +21,8 @@ void _main(multiboot_info_t* mbd, unsigned int magic) {
   vga_init_color(COLORSCHEME_BLACKGREY);
   vga_clear_screen();
 
+  panic("HIGHER HALF WORKS!!!");
+
   // MEMORY DETECTION
   if (magic != MULTIBOOT_BOOTLOADER_MAGIC) {
     panic("Invalid bootloader magic number!");
@@ -57,15 +59,15 @@ void _main(multiboot_info_t* mbd, unsigned int magic) {
 }
 
 int kern_main() {
-  pmm_align_memory();
-  vmm_init_paging();
+  //pmm_align_memory();
+  //vmm_init_paging();
 
   puts("Kebax v0.0.1-alpha-scarraFOSS\n");
   puts("Control successfully handed over to C kernel!\n");
   
-  if (vmm_virt_to_phys(0xC0000000) == 0x100000) {
-    puts("Kernel is in higher half!");
-  }
+  //if (vmm_virt_to_phys(0xC0000000) == 0x100000) {
+    //puts("Kernel is in higher half!");
+  //}
 
   idt_init();
   idt_enable_interrupt(1);

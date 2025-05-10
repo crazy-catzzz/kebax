@@ -26,7 +26,7 @@ SECTIONS {
   .bss  ALIGN (4K) : AT (ADDR (.bss) - 0xC0000000) {
     *(.bss)
   }
-  kern_end = .;
+  kern_end = ALIGN(4K);
 
   /DISCARD/ : {*(*)}
 }

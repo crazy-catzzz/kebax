@@ -11,6 +11,7 @@ global id_map_table
 global hh_map_table
 
 ; BOOT STAGE 1:
+; - Get memory map
 ; - Fill page tables
 ; - Map kernel to higher half
 ; - Enable paging
@@ -29,6 +30,11 @@ section .pages
 stage1:
   ; Filling the page tables is handled by C
   mov esp, tmp_stack
+
+  ;push eax ; Args
+  ;push ebx ; Args
+  ;call get_mem_map
+
   call init_paging
   
   ; Load page directory

@@ -17,12 +17,6 @@ frame_t frame_start = &kern_end;
 // Memory frame bitmap
 uint8_t* frame_map;
 
-// Manually align to 4KB
-void pmm_align_memory() {
-  frame_start += 0x1000;
-  frame_start = (uint32_t*) ((uintptr_t)frame_start & (uintptr_t)0xFFFFF000);
-}
-
 frame_t pmm_alloc_frame() {
   int found = -1;
 
@@ -41,7 +35,7 @@ frame_t pmm_alloc_frame() {
   }
 
   // Return start address of frame
-  return frame_start + (found*FRAME_SIZE);
+  return (void*) (frame_start + found*FRAME_SIZE);
 }
 
 void pmm_free_frame(frame_t frame) {

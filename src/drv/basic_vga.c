@@ -1,12 +1,13 @@
 // Basic VGA text mode driver
 
 #include "../include/basic_vga.h"
+#include <stdbool.h>
 
 #define SCR_COLS 80
 #define SCR_ROWS 25
 #define CELL_SIZE 2
 
-volatile char* video_mem = (volatile char*)0xB8000;
+volatile char* video_mem = (volatile char*)0xC00B8000;
 
 // Theoretical screen coordinates
 int lineno = 0;
@@ -84,36 +85,15 @@ void putx(unsigned long int x) {
 
 // Send integer to screen
 void puti(int i) {
-  int n = i;
-  int j = 0;
-  char* istr;
-
-  do {
-    char* base_ten_map = "0123456789";
-    int index = i % 10;
-    if (index < 0) index = -index;
-    istr[j] = base_ten_map[index];
-    i /= 10;
-    j++;
-  } while (i);
-
-  int end = j - 1;
-  int start = 0;
-
-  while (start < end) {
-    char temp = istr[start];
-    istr[start] = istr[end];
-    istr[end] = temp;
-    start++;
-    end--;
-  }
-  istr[j] = '\0';
-
-  if (n < 0) {
+  char* map = "0123456789";
+  
+  if (i < 0) {
+    i = -i;
     putc('-');
   }
-  
-  for (int k = 0; istr[k] != 0; k++) {
-    putc(istr[k]);
+
+  if (i / 10 != 0) {
+    puti(i / 10);
   }
+  putc(map[i % 10]);
 }
